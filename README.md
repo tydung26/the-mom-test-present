@@ -1,6 +1,6 @@
 # The Mom Test — Presentation
 
-A cinematic 19-slide presentation of [The Mom Test](https://www.momtestbook.com/) by Rob Fitzpatrick. Built for a 30-minute talk to mixed company teams.
+A cinematic 24-slide presentation of [The Mom Test](https://www.momtestbook.com/) by Rob Fitzpatrick. Built for a 30-minute talk to mixed company teams.
 
 ## Quick Start
 
@@ -34,29 +34,34 @@ URL hash (`#5`) deep-links to any slide.
 
 ## Slides
 
-19 slides covering the core ideas from the book:
+24 slides covering the core ideas from the book:
 
 | # | Slide | Animation |
 |---|-------|-----------|
 | 1 | Title | — |
 | 2 | The Problem | Typewriter effect |
 | 3 | The Story | Staggered narrative |
-| 4 | Failing the Mom Test | Bad conversation (chat bubbles) |
-| 5 | Passing the Mom Test | Good conversation (chat bubbles) |
+| 4 | Failing the Mom Test | Bad conversation (chat bubbles, flower shop) |
+| 5 | Passing the Mom Test | Good conversation (chat bubbles, flower shop) |
 | 6 | The 3 Rules | Animated cards |
-| 7 | Good vs Bad Questions | Split screen |
+| 7 | Good vs Bad Questions | Split screen (flower shop examples) |
 | 8 | Rules of Thumb | Cascading quotes |
 | 9 | 3 Types of Bad Data | Scale-in cards |
-| 10 | Deflecting Compliments | Before/after |
-| 11 | Ask Scary Questions | Dramatic zoom |
-| 12 | Love Bad News | Counter animation |
-| 13 | Keep It Casual | Comparison |
-| 14 | Commitment & Advancement | Traffic light |
-| 15 | Meeting Outcomes | Flip cards |
-| 16 | Finding Conversations | Snowball circles |
-| 17 | Choose Your Customers | Blur-to-focus |
-| 18 | Cheat Sheet | Rapid grid reveal |
-| 19 | Q&A | Pulsing glow |
+| 10 | Deflecting Compliments | Before/after (flower shop context) |
+| 11 | Anchoring Fluff | Three-column reveal (fluff → anchor → fact) |
+| 12 | Digging Beneath Ideas | MTV story reveal + dig questions |
+| 13 | Embrace the Uncomfortable | Scary questions + bad news merged |
+| 14 | Keep It Casual | Comparison |
+| 15 | Conferences & Events | Split screen (what to do vs what not to do) |
+| 16 | Meeting Framework (VFWPA) | Five-card stack |
+| 17 | Commitment & Advancement | Traffic light |
+| 18 | Meeting Outcomes | Flip cards |
+| 19 | Product vs Market Risk | Two-column comparison |
+| 20 | Finding Conversations | Snowball circles |
+| 21 | Choose Your Customers | Blur-to-focus (Weddings or Weekends) |
+| 22 | Customer Slicing | Funnel narrowing (who-where pairs) |
+| 23 | Cheat Sheet | Rapid grid reveal (16 rules, 4 columns) |
+| 24 | Q&A | Pulsing glow |
 
 ## Project Structure
 
@@ -66,7 +71,7 @@ src/
 ├── hooks/            # useSlideNavigation, useCountUp
 ├── lib/              # slides-data (lazy-loaded registry), animation-variants
 ├── routes/           # TanStack Router: __root.tsx, index.tsx
-├── slides/           # 19 individual slide components (slide-01 … slide-19)
+├── slides/           # 24 individual slide components (slide-01 … slide-24)
 └── styles.css        # Global styles + Tailwind imports
 ```
 
