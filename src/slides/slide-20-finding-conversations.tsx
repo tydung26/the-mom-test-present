@@ -18,7 +18,7 @@ const circleItem: Variants = {
   },
 }
 
-export default function Slide16FindingConversations() {
+export default function Slide20FindingConversations() {
   return (
     <SlideLayout className="bg-[#0f0f0f]">
       <motion.h2

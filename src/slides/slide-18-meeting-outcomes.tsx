@@ -85,7 +85,7 @@ function FlipCard({ card, index }: { card: typeof CARDS[0]; index: number }) {
   )
 }
 
-export default function Slide15MeetingOutcomes() {
+export default function Slide18MeetingOutcomes() {
   return (
     <SlideLayout className="bg-[#0f0f0f]">
       <motion.h2

@@ -4,14 +4,14 @@ import { staggerContainer, fadeIn } from '../lib/animation-variants'
 import ChatBubble from '../components/chat-bubble'
 
 const messages = [
-  { sender: 'Son', message: "How often do you cook, Mom?", side: 'right' as const, color: 'green' as const, annotation: 'Asks about real behavior' },
-  { sender: 'Mom', message: "Oh, a few times a week when the kids visit.", side: 'left' as const, color: 'stone' as const },
-  { sender: 'Son', message: "What do you usually cook from — recipes or memory?", side: 'right' as const, color: 'green' as const, annotation: 'Specific, not hypothetical' },
-  { sender: 'Mom', message: "I mostly use my old recipe binder. Sometimes Google.", side: 'left' as const, color: 'stone' as const },
-  { sender: 'Son', message: "When's the last time you looked for a new recipe?", side: 'right' as const, color: 'green' as const },
-  { sender: 'Mom', message: "Hmm... I tried a Thai recipe about two months ago.", side: 'left' as const, color: 'stone' as const },
-  { sender: 'Son', message: "How did you find it?", side: 'right' as const, color: 'green' as const, annotation: 'Seeks concrete details' },
-  { sender: 'Mom', message: "My friend Margaret emailed it to me, actually.", side: 'left' as const, color: 'stone' as const },
+  { sender: 'You', message: "Those flowers on your table are nice — where'd you get them?", side: 'right' as const, color: 'green' as const, annotation: 'Asks about real behavior' },
+  { sender: 'Friend', message: "The market on Sunday. They were like $5.", side: 'left' as const, color: 'stone' as const },
+  { sender: 'You', message: "Do you buy flowers often?", side: 'right' as const, color: 'green' as const, annotation: 'Frequency, not hypothetical' },
+  { sender: 'Friend', message: "Not really. Maybe for someone's birthday.", side: 'left' as const, color: 'stone' as const },
+  { sender: 'You', message: "When's the last time you ordered from an actual flower shop?", side: 'right' as const, color: 'green' as const, annotation: 'Specific past event' },
+  { sender: 'Friend', message: "Valentine's Day. $60 and they died in 3 days. Felt ripped off.", side: 'left' as const, color: 'stone' as const },
+  { sender: 'You', message: "Did you look at other options before that?", side: 'right' as const, color: 'green' as const, annotation: 'Existing alternatives' },
+  { sender: 'Friend', message: "Just Googled 'flower delivery near me' and picked the first one.", side: 'left' as const, color: 'stone' as const },
 ]
 
 export default function Slide05PassingMomTest() {

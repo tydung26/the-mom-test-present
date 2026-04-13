@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { SlideLayout } from '../components/slide-layout'
 import { slideUp, fadeIn } from '../lib/animation-variants'
 
-export default function Slide17ChooseCustomers() {
+export default function Slide21ChooseCustomers() {
   return (
     <SlideLayout className="bg-[#0f0f0f]">
       <div className="w-full max-w-3xl flex flex-col items-center gap-8">
@@ -12,7 +12,7 @@ export default function Slide17ChooseCustomers() {
           animate="visible"
           className="text-4xl sm:text-5xl font-black text-[#f5f5f5] text-center"
         >
-          Babies or <span className="text-[#E8699A]">Bodybuilders?</span>
+          Weddings or <span className="text-[#E8699A]">Weekends?</span>
         </motion.h2>
 
         <motion.p
@@ -22,8 +22,8 @@ export default function Slide17ChooseCustomers() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="text-[#78716c] text-center text-base sm:text-lg leading-relaxed max-w-xl"
         >
-          A superfood company tried to serve everyone — babies, bodybuilders, health enthusiasts.
-          Serving everyone meant serving no one.
+          A flower shop tried to serve everyone — weddings, Valentine&rsquo;s last-minuters, offices,
+          funerals. Serving everyone meant serving no one.
         </motion.p>
 
         {/* Blur → focus animation */}
@@ -52,7 +52,7 @@ export default function Slide17ChooseCustomers() {
             transition={{ delay: 1.4, duration: 1.5 }}
             className="text-3xl font-black text-[#E8699A] select-none"
           >
-            One Segment
+            Brides-to-be
           </motion.div>
         </div>
 

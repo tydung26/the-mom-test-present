@@ -3,15 +3,15 @@ import { SlideLayout } from '../components/slide-layout'
 import { staggerContainer, slideFromLeft, slideFromRight, fadeIn } from '../lib/animation-variants'
 
 const badQuestions = [
-  'Do you think it\'s a good idea?',
-  'Would you buy a product that does X?',
-  'How much would you pay for X?',
+  'Would you buy flowers from my shop?',
+  'Do you think a flower subscription is a good idea?',
+  'How much would you pay for a bouquet?',
 ]
 
 const goodQuestions = [
-  'How are you dealing with it now?',
-  'Talk me through the last time that happened...',
-  'What else have you tried?',
+  'When did you last buy someone flowers?',
+  'Walk me through how you chose where to buy them.',
+  'What else did you consider?',
 ]
 
 export default function Slide07GoodVsBadQuestions() {

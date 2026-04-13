@@ -3,7 +3,7 @@ import { SlideLayout } from '../components/slide-layout'
 import { slideUp, staggerContainer, staggerItem } from '../lib/animation-variants'
 import { useCountUp } from '../hooks/use-count-up'
 
-export default function Slide13KeepItCasual() {
+export default function Slide14KeepItCasual() {
   const formalHours = useCountUp(4, 900, 1100)
   const casualMinutes = useCountUp(5, 900, 1300)
 
@@ -64,7 +64,7 @@ export default function Slide13KeepItCasual() {
           >
             {casualMinutes} min
           </motion.span>
-          <p className="mt-2 text-sm text-[#F0A0BC]/70">at a coffee shop</p>
+          <p className="mt-2 text-sm text-[#E8699A]/70">at a coffee shop</p>
         </motion.div>
       </motion.div>
     </SlideLayout>

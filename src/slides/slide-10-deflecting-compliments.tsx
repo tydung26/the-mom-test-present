@@ -45,7 +45,7 @@ export default function Slide10DeflectingCompliments() {
             <p className="text-[#f5f5f5] text-base">&ldquo;That&rsquo;s cool.&rdquo;</p>
             <span className="text-green-400 text-xl self-center">↓</span>
             <p className="text-green-300 text-base">
-              &ldquo;Thanks! So how are you dealing with this currently?&rdquo;
+              &ldquo;Thanks! So how do you usually buy flowers when you need them?&rdquo;
             </p>
             <span className="text-green-400 text-xl self-center">↓</span>
             <div className="flex gap-2 flex-wrap">

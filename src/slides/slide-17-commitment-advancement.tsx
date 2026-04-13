@@ -29,7 +29,7 @@ const lightItem: Variants = {
   },
 }
 
-export default function Slide14CommitmentAdvancement() {
+export default function Slide17CommitmentAdvancement() {
   return (
     <SlideLayout className="bg-[#0f0f0f]">
       <motion.h2

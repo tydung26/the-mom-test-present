@@ -21,8 +21,7 @@ export default function Slide01Title() {
         transition={{ delay: 0.5, duration: 0.6 }}
         className="mt-8 text-lg text-stone-400 max-w-2xl leading-relaxed"
       >
-        How to talk to customers &amp; learn if your business is a good idea
-        when everyone is lying to you
+        How to validate your startup idea when everyone is lying to you
       </motion.p>
 
       <motion.p

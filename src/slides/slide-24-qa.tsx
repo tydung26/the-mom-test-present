@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { SlideLayout } from '../components/slide-layout'
 import { fadeIn, pulseGlow } from '../lib/animation-variants'
 
-export default function Slide19Qa() {
+export default function Slide24Qa() {
   return (
     <SlideLayout className="bg-[#0f0f0f]">
       <div className="relative flex flex-col items-center justify-center gap-6">

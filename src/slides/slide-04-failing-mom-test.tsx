@@ -12,10 +12,10 @@ interface Message {
 }
 
 const messages: Message[] = [
-  { sender: 'Son', message: "Mom, I have a business idea. What do you think?", side: 'right', color: 'amber' },
-  { sender: 'Mom', message: "Of course, dear! What is it?", side: 'left', color: 'stone' },
-  { sender: 'Son', message: "It's an app for creating cookbooks on the iPad. Would you use something like that?", side: 'right', color: 'amber' },
-  { sender: 'Mom', message: "Oh yes, that sounds wonderful! I love it.", side: 'left', color: 'stone', subtext: "(Thinking: I'll just say yes to be supportive.)" },
+  { sender: 'You', message: "I want to open a flower shop with same-day delivery. Would you buy from it?", side: 'right', color: 'amber' },
+  { sender: 'Friend', message: "Oh wow, that sounds lovely! I'd definitely order from you.", side: 'left', color: 'stone', subtext: "(Thinking: I'll just say yes to be supportive.)" },
+  { sender: 'You', message: "We'd do custom arrangements and a subscription service too.", side: 'right', color: 'amber' },
+  { sender: 'Friend', message: "I love that! My apartment always needs flowers. You should totally do it.", side: 'left', color: 'stone', subtext: "(Thinking: I buy flowers maybe twice a year...)" },
 ]
 
 export default function Slide04FailingMomTest() {
