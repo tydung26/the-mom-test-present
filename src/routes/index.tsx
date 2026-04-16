@@ -1,4 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { SlideDeck } from '../components/slide-deck.tsx'
+import { ScrollContainer } from '../components/scroll-container.tsx'
 
-export const Route = createFileRoute('/')({ component: SlideDeck })
+export const Route = createFileRoute('/')({ component: ScrollContainer })
