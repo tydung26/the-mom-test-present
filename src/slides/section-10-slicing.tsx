@@ -1,39 +1,49 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { fadeIn, scaleSpring, defaultViewport } from '../lib/animation-variants'
+import { fadeIn, defaultViewport } from '../lib/animation-variants'
 
 // Sequential funnel: broad → narrow → who-where pair
-// Each tier blurs out when the next tier appears, creating a "drilling down" effect
 const FUNNEL_TIERS = [
   { label: 'Students', width: 'max-w-3xl' },
   { label: 'PhD students', width: 'max-w-2xl' },
   { label: 'Non-native PhD students with upcoming talks', width: 'max-w-xl' },
 ]
 
-// Timing constants (ms after viewport entry)
-const TIER_DELAYS = [300, 700, 1200, 1700, 2200, 2700]
+// Slicing questions from the book
+const SLICING_QUESTIONS = [
+  'Who wants it most?',
+  'Why do they want it?',
+  'Where can we find them?',
+]
+
+// Ease-out-quint for smooth reveals
+const EASE_OUT_QUINT = [0.23, 1, 0.32, 1]
+
+// Total steps: 8
+// 0 = nothing, 1 = tier1, 2 = questions, 3 = blur+arrow, 4 = tier2,
+// 5 = blur+arrow, 6 = tier3+who-where, 7 = method, 8 = footer
+const MAX_TIER = 8
 
 export default function Section10Slicing() {
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
-
-  // tier state gates each sequential reveal:
-  // 0 = nothing visible
-  // 1 = tier-1 appears
-  // 2 = tier-1 blurs + arrow-1 appears
-  // 3 = tier-2 appears
-  // 4 = tier-2 blurs + arrow-2 appears
-  // 5 = tier-3 + who-where label appears
-  // 6 = where-to-find + footer appear
   const [tier, setTier] = useState(0)
 
+  // Handle Enter key to advance tier
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && isInView && tier < MAX_TIER) {
+        e.preventDefault()
+        setTier((prev) => prev + 1)
+      }
+    },
+    [isInView, tier]
+  )
+
   useEffect(() => {
-    if (!isInView) return
-    const timers = TIER_DELAYS.map((delay, i) =>
-      setTimeout(() => setTier(i + 1), delay)
-    )
-    return () => timers.forEach(clearTimeout)
-  }, [isInView])
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handleKeyDown])
 
   return (
     <div ref={ref} className="w-full max-w-3xl flex flex-col items-center gap-3">
@@ -62,55 +72,87 @@ export default function Section10Slicing() {
         </p>
       </motion.div>
 
-      {/* Tier 1 — broadest, blurs when tier >= 2 */}
+      {/* Hint text */}
+      {isInView && tier === 0 && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+          className="text-center text-stone-500 text-xs"
+        >
+          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd> to slice
+        </motion.p>
+      )}
+
+      {/* Tier 1 — broadest */}
       <div className="w-full flex flex-col items-center gap-1">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={tier >= 1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.45 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={tier >= 1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           className="w-full"
         >
           <motion.div
             initial={{ filter: 'blur(0px)', opacity: 1 }}
             animate={
-              tier >= 2
+              tier >= 3
                 ? { filter: 'blur(7px)', opacity: 0.28 }
                 : { filter: 'blur(0px)', opacity: 1 }
             }
-            transition={{ duration: 0.45 }}
+            transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
             className="bg-white/5 border border-white/10 rounded-xl px-6 py-3 text-center"
           >
             <p className="text-[#f5f5f5] text-xl font-semibold">{FUNNEL_TIERS[0].label}</p>
           </motion.div>
         </motion.div>
 
+        {/* Slicing questions — appear after tier 1 */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={tier >= 2 && tier < 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
+          className="flex gap-2 mt-2 flex-wrap justify-center"
+        >
+          {SLICING_QUESTIONS.map((q, i) => (
+            <motion.span
+              key={q}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={tier >= 2 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4, delay: i * 0.1, ease: EASE_OUT_QUINT }}
+              className="text-xs text-[#E8699A] bg-[#E8699A]/10 border border-[#E8699A]/30 rounded-full px-3 py-1"
+            >
+              {q}
+            </motion.span>
+          ))}
+        </motion.div>
+
         {/* Arrow 1 */}
         <motion.span
-          initial={{ opacity: 0 }}
-          animate={tier >= 2 ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-[#E8699A] text-2xl font-bold leading-none"
+          initial={{ opacity: 0, y: -8 }}
+          animate={tier >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+          transition={{ duration: 0.4, ease: EASE_OUT_QUINT }}
+          className="text-[#E8699A] text-2xl font-bold leading-none mt-1"
         >
           ↓
         </motion.span>
       </div>
 
-      {/* Tier 2 — medium, blurs when tier >= 4 */}
+      {/* Tier 2 — medium */}
       <div className="w-full flex flex-col items-center gap-1">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={tier >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.45 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={tier >= 4 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           className="w-full max-w-2xl mx-auto"
         >
           <motion.div
             initial={{ filter: 'blur(0px)', opacity: 1 }}
             animate={
-              tier >= 4
+              tier >= 5
                 ? { filter: 'blur(7px)', opacity: 0.28 }
                 : { filter: 'blur(0px)', opacity: 1 }
             }
-            transition={{ duration: 0.45 }}
+            transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
             className="bg-white/5 border border-white/10 rounded-xl px-6 py-3 text-center"
           >
             <p className="text-[#f5f5f5] text-xl font-semibold">{FUNNEL_TIERS[1].label}</p>
@@ -119,9 +161,9 @@ export default function Section10Slicing() {
 
         {/* Arrow 2 */}
         <motion.span
-          initial={{ opacity: 0 }}
-          animate={tier >= 4 ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, y: -8 }}
+          animate={tier >= 5 ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+          transition={{ duration: 0.4, ease: EASE_OUT_QUINT }}
           className="text-[#E8699A] text-2xl font-bold leading-none"
         >
           ↓
@@ -130,9 +172,9 @@ export default function Section10Slicing() {
 
       {/* Tier 3 — narrowest, pink highlight — the "who" */}
       <motion.div
-        variants={scaleSpring}
-        initial="hidden"
-        animate={tier >= 5 ? 'visible' : 'hidden'}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={tier >= 6 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
         className="w-full max-w-xl mx-auto"
       >
         <div className="bg-[#E0527E]/10 border-2 border-[#E0527E] rounded-xl px-6 py-4 text-center">
@@ -144,9 +186,9 @@ export default function Section10Slicing() {
 
       {/* WHO + WHERE outcome */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={tier >= 5 ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={tier >= 6 ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT, delay: 0.15 }}
         className="flex items-center gap-3 mt-1"
       >
         <span className="text-[#E8699A] font-black text-base tracking-wide">WHO</span>
@@ -156,12 +198,38 @@ export default function Section10Slicing() {
         <span className="text-[#f5f5f5] text-sm font-semibold">Find via department advisors</span>
       </motion.div>
 
+      {/* Method box — the slicing questions summary */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={tier >= 7 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
+        className="w-full max-w-md mt-3 bg-white/5 border border-white/10 rounded-xl p-4"
+      >
+        <p className="text-stone-400 text-xs uppercase tracking-widest mb-2 text-center">
+          The Slicing Method
+        </p>
+        <ul className="text-sm text-[#f5f5f5]/80 space-y-1.5">
+          <li className="flex gap-2">
+            <span className="text-[#E8699A]">1.</span>
+            <span>Who wants it <span className="text-stone-400">most</span>?</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#E8699A]">2.</span>
+            <span>Why do they want it? <span className="text-stone-400">(problem/goal)</span></span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#E8699A]">3.</span>
+            <span>Where can we <span className="text-stone-400">find</span> them?</span>
+          </li>
+        </ul>
+      </motion.div>
+
       {/* Rule */}
       <motion.p
         initial={{ opacity: 0 }}
-        animate={tier >= 6 ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center text-[#E8699A] font-bold text-sm tracking-wide mt-1"
+        animate={tier >= 8 ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
+        className="text-center text-[#E8699A] font-bold text-sm tracking-wide mt-2"
       >
         Good customer segments are a who-where pair.
       </motion.p>
@@ -169,8 +237,8 @@ export default function Section10Slicing() {
       {/* Footer */}
       <motion.p
         initial={{ opacity: 0 }}
-        animate={tier >= 6 ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.5, delay: 0.15 }}
+        animate={tier >= 8 ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT, delay: 0.2 }}
         className="text-center text-[#78716c] italic text-sm"
       >
         &ldquo;If you don&apos;t know where to find your customers, keep slicing.&rdquo;
