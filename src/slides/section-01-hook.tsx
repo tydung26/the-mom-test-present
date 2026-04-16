@@ -102,7 +102,7 @@ export default function Section01Hook() {
         </p>
       </motion.div>
 
-      {/* Phase 3: The mission */}
+      {/* Phase 3: The cost — personal stakes */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={phase >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -110,10 +110,15 @@ export default function Section01Hook() {
         className="flex flex-col items-center gap-3"
       >
         <p className="text-stone-500 text-xs uppercase tracking-widest">
-          Your mission
+          The cost
         </p>
         <p className="text-2xl sm:text-3xl font-black text-[#f5f5f5] text-center leading-snug">
-          Learn the <span className="text-[#E8699A]">truth</span> before you run out of money.
+          I spent <span className="text-[#E8699A]">6 months</span> building an app
+          <br />
+          my mom said she'd buy.
+        </p>
+        <p className="text-xl text-stone-400 mt-2">
+          She never opened it.
         </p>
       </motion.div>
     </div>

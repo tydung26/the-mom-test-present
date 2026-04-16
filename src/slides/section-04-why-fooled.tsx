@@ -7,18 +7,21 @@ const CARDS = [
     title: 'Compliments',
     example: '"That\'s so cool!"',
     description: 'Feels great, means nothing',
+    cost: '→ You build it. Nobody uses it.',
   },
   {
     icon: '☁️',
     title: 'Fluff',
     example: '"I would definitely use that..."',
     description: 'Future tense = wishful thinking',
+    cost: '→ You quit your job. They forget you exist.',
   },
   {
     icon: '💡',
     title: 'Ideas',
     example: '"You should totally add..."',
     description: 'Their solution, not their problem',
+    cost: '→ You add 10 features. They wanted something else.',
   },
 ]
 
@@ -51,7 +54,8 @@ export default function Section04WhyFooled() {
             <span className="text-4xl mb-4">{card.icon}</span>
             <h3 className="text-xl font-bold text-[#E8699A] mb-3">{card.title}</h3>
             <p className="italic text-[#78716c] mb-3 text-base">{card.example}</p>
-            <p className="text-sm text-[#f5f5f5]/70">{card.description}</p>
+            <p className="text-sm text-[#f5f5f5]/70 mb-3">{card.description}</p>
+            <p className="text-xs text-red-400/80 font-medium">{card.cost}</p>
           </motion.div>
         ))}
       </motion.div>

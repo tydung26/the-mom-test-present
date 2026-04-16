@@ -68,16 +68,25 @@ export default function Section12Action() {
         className="relative z-10 w-16 h-px bg-[#E8699A]/40"
       />
 
-      {/* Q&A indicator */}
+      {/* Emotional close */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={defaultViewport}
         transition={{ delay: 0.9, type: 'spring', stiffness: 200, damping: 20 }}
-        className="relative z-10 flex flex-col items-center gap-2"
+        className="relative z-10 flex flex-col items-center gap-6"
       >
-        <p className="text-5xl sm:text-6xl font-black text-[#f5f5f5]">Questions?</p>
-        <p className="text-[#78716c] text-base">The Mom Test — Rob Fitzpatrick</p>
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-stone-400">
+            The truth hurts.
+          </p>
+          <p className="text-2xl sm:text-3xl font-bold text-[#f5f5f5] mt-2">
+            But lies hurt more —
+          </p>
+          <p className="text-2xl sm:text-3xl font-black text-[#E8699A]">
+            they just take longer.
+          </p>
+        </div>
       </motion.div>
     </div>
   )

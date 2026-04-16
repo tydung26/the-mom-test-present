@@ -23,7 +23,7 @@ const messages: Message[] = [
     message: 'Hmmm.',
     side: 'left',
     color: 'stone',
-    subtext: '(Thinking: "As if I need another cookbook at my age")',
+    subtext: "(I haven't bought a cookbook in years...)",
   },
   {
     sender: 'Son',
@@ -36,7 +36,7 @@ const messages: Message[] = [
     message: 'Oh, well yes honey, that sounds amazing.',
     side: 'left',
     color: 'stone',
-    subtext: '(Thinking: "I have rationalised the price outside of a real purchase decision")',
+    subtext: '(He worked so hard on this...)',
   },
 ]
 
