@@ -163,7 +163,7 @@ export default function Section11Meetings() {
       </motion.div>
 
       {/* Cards row */}
-      <div className="flex gap-3 w-full max-w-5xl">
+      <div className="flex gap-3 w-full max-w-5xl mx-auto">
         {CARDS.map((card, i) => (
           <FlipCard key={card.front} card={card} index={i} enabled={isInView} />
         ))}
