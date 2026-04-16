@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { defaultViewport } from '../lib/animation-variants'
 
 // Color tokens per verdict tier
@@ -15,7 +15,6 @@ interface Card {
   verdict: string
   note: string
   tier: keyof typeof COLOR
-  delay: number
 }
 
 const CARDS: Card[] = [
@@ -24,62 +23,55 @@ const CARDS: Card[] = [
     verdict: 'BAD',
     note: 'Pure compliment — zero data',
     tier: 'bad',
-    delay: 800,
   },
   {
     front: '"Let me know when it launches"',
     verdict: 'BAD',
     note: 'Stall tactic — polite exit',
     tier: 'bad',
-    delay: 1600,
   },
   {
     front: '"I would definitely buy that"',
     verdict: 'DANGER',
     note: '$10M false positive',
     tier: 'danger',
-    delay: 2400,
   },
   {
     front: '"What are the next steps?"',
     verdict: 'GOOD',
     note: 'Advancement — they\'re in',
     tier: 'good',
-    delay: 3200,
   },
   {
     front: '"Can I buy the prototype?"',
     verdict: 'GOLD',
     note: 'Real commitment',
     tier: 'gold',
-    delay: 4000,
   },
 ]
+
+// Ease-out-quart for smooth, dramatic flip
+const EASE_OUT_QUART = 'cubic-bezier(0.165, 0.84, 0.44, 1)'
 
 function FlipCard({
   card,
   index,
-  enabled,
+  isFlipped,
+  isNext,
 }: {
   card: Card
   index: number
-  enabled: boolean
+  isFlipped: boolean
+  isNext: boolean
 }) {
-  const [flipped, setFlipped] = useState(false)
   const colors = COLOR[card.tier]
-
-  useEffect(() => {
-    if (!enabled) return
-    const timer = setTimeout(() => setFlipped(true), card.delay)
-    return () => clearTimeout(timer)
-  }, [enabled, card.delay])
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={defaultViewport}
-      transition={{ delay: index * 0.12, type: 'spring', stiffness: 200, damping: 22 }}
+      transition={{ delay: index * 0.1, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
       className="flex-1"
       style={{ perspective: '800px' }}
     >
@@ -88,14 +80,20 @@ function FlipCard({
           position: 'relative',
           height: '190px',
           transformStyle: 'preserve-3d',
-          transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transition: `transform 0.8s ${EASE_OUT_QUART}`,
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
         {/* Front face — neutral statement */}
         <div
-          style={{ backfaceVisibility: 'hidden' }}
-          className="absolute inset-0 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 p-4 text-center"
+          style={{
+            backfaceVisibility: 'hidden',
+            // Subtle pulse animation for "next" card
+            animation: isNext ? 'pulse-border 2s ease-in-out infinite' : 'none',
+          }}
+          className={`absolute inset-0 flex items-center justify-center rounded-xl bg-white/5 border p-4 text-center ${
+            isNext ? 'border-[#E8699A]/50' : 'border-white/10'
+          }`}
         >
           <p className="text-[#f5f5f5] text-sm font-medium italic leading-snug">
             {card.front}
@@ -123,12 +121,39 @@ function FlipCard({
 }
 
 export default function Section11Meetings() {
-  const ref = useRef(null)
-  // Gate all flip timers on viewport entry so animation only starts when visible
+  const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const [flippedCount, setFlippedCount] = useState(0)
+
+  // Handle Enter key to flip next card
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && isInView && flippedCount < CARDS.length) {
+        e.preventDefault()
+        setFlippedCount((prev) => prev + 1)
+      }
+    },
+    [isInView, flippedCount]
+  )
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handleKeyDown])
+
+  // Show footer after all cards flipped
+  const allFlipped = flippedCount >= CARDS.length
 
   return (
     <div ref={ref} className="w-full">
+      {/* Pulse animation for "next" card indicator */}
+      <style>{`
+        @keyframes pulse-border {
+          0%, 100% { border-color: rgba(232, 105, 154, 0.3); }
+          50% { border-color: rgba(232, 105, 154, 0.7); }
+        }
+      `}</style>
+
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -165,16 +190,33 @@ export default function Section11Meetings() {
       {/* Cards row */}
       <div className="flex gap-3 w-full max-w-5xl mx-auto">
         {CARDS.map((card, i) => (
-          <FlipCard key={card.front} card={card} index={i} enabled={isInView} />
+          <FlipCard
+            key={card.front}
+            card={card}
+            index={i}
+            isFlipped={i < flippedCount}
+            isNext={i === flippedCount && isInView}
+          />
         ))}
       </div>
 
-      {/* Fix line */}
+      {/* Hint text - shows until first flip */}
+      {isInView && flippedCount === 0 && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.4 }}
+          className="mt-4 text-center text-stone-500 text-xs"
+        >
+          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd> to reveal
+        </motion.p>
+      )}
+
+      {/* Fix line - appears after all cards flipped */}
       <motion.p
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={defaultViewport}
-        transition={{ delay: 0.6, duration: 0.6 }}
+        animate={{ opacity: allFlipped ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
         className="mt-6 text-center text-[#78716c] italic text-sm"
       >
         Push for commitment at the end of every meeting — or you&apos;re collecting compliments.
