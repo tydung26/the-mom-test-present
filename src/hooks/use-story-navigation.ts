@@ -20,18 +20,18 @@ export function useStoryNavigation() {
   )
 
   // Scroll to a specific section
-  const scrollToSection = useCallback((index: number) => {
+  const scrollToSection = useCallback((index: number, instant = false) => {
     if (index < 0 || index >= TOTAL_SECTIONS) return
     const el = sectionRefs.current[index]
     if (!el) return
 
     isScrollingRef.current = true
-    el.scrollIntoView({ behavior: 'smooth' })
+    el.scrollIntoView({ behavior: instant ? 'instant' : 'smooth' })
 
     // Reset scrolling flag after animation completes
     setTimeout(() => {
       isScrollingRef.current = false
-    }, 800)
+    }, instant ? 50 : 800)
   }, [])
 
   // Force scroll to top on mount and delay observer setup
@@ -96,16 +96,22 @@ export function useStoryNavigation() {
     }
   }, [currentSection])
 
-  // Keyboard navigation
+  // Keyboard navigation (instant scroll when holding keys for fast navigation)
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      // Skip if scrolling and not a repeated key (allow rapid-fire when holding)
+      if (isScrollingRef.current && !e.repeat) return
+
+      // Use instant scroll when holding keys for fast navigation
+      const useInstant = e.repeat
+
       switch (e.key) {
         case 'ArrowDown':
         case 'ArrowRight':
           e.preventDefault()
           setCurrentSection((prev) => {
             const next = Math.min(prev + 1, TOTAL_SECTIONS - 1)
-            scrollToSection(next)
+            scrollToSection(next, useInstant)
             return next
           })
           break
@@ -114,19 +120,19 @@ export function useStoryNavigation() {
           e.preventDefault()
           setCurrentSection((prev) => {
             const next = Math.max(prev - 1, 0)
-            scrollToSection(next)
+            scrollToSection(next, useInstant)
             return next
           })
           break
         case 'Home':
           e.preventDefault()
           setCurrentSection(0)
-          scrollToSection(0)
+          scrollToSection(0, true)
           break
         case 'End':
           e.preventDefault()
           setCurrentSection(TOTAL_SECTIONS - 1)
-          scrollToSection(TOTAL_SECTIONS - 1)
+          scrollToSection(TOTAL_SECTIONS - 1, true)
           break
       }
     }

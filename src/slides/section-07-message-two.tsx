@@ -55,8 +55,8 @@ export default function Section07MessageTwo() {
         className="border-l-4 border-[#E8699A] pl-6 max-w-2xl"
       >
         <p className="text-lg sm:text-xl text-stone-300 italic leading-relaxed">
-          &ldquo;The more they&apos;re giving up, the more seriously you can
-          take their kind words.&rdquo;
+          &ldquo;A compliment costs them nothing, so it&apos;s worth nothing
+          and carries no data.&rdquo;
         </p>
       </motion.div>
     </div>

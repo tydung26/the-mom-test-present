@@ -19,7 +19,7 @@ export default function Section00Agenda() {
           <span className="text-[#E8699A]">uncomfortable</span>
         </p>
         <p className="mt-4 text-stone-500 text-base sm:text-lg">
-          If it felt good, the data is fake.
+          If it felt good, there's no real insight.
         </p>
       </motion.div>
 

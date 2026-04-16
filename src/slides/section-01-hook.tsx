@@ -31,60 +31,51 @@ export default function Section01Hook() {
   }, [handleKeyDown])
 
   return (
-    <div ref={ref} className="max-w-4xl text-center flex flex-col items-center gap-6">
-      {/* Phase 0: The setup - what we all do */}
+    <div ref={ref} className="max-w-4xl text-center flex flex-col items-center gap-8">
+      {/* Phase 0: The setup */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInViewOnce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.7, ease: EASE_OUT_QUINT }}
-        className="flex flex-col items-center gap-2"
+        initial={{ opacity: 0, y: 20, filter: 'blur(0px)' }}
+        animate={
+          isInViewOnce
+            ? {
+                opacity: phase >= 1 ? 0.2 : 1,
+                y: 0,
+                filter: phase >= 1 ? 'blur(8px)' : 'blur(0px)',
+                scale: phase >= 1 ? 0.95 : 1
+              }
+            : { opacity: 0, y: 20, filter: 'blur(0px)' }
+        }
+        transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
+        className="flex flex-col items-center"
       >
-        <motion.p
-          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-xl sm:text-2xl text-stone-400 font-medium"
-        >
-          We do everything right.
-        </motion.p>
-        <motion.p
-          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
-        >
+        <p className="text-4xl sm:text-6xl font-black text-[#f5f5f5] leading-tight">
           We talk to customers.
-        </motion.p>
-        <motion.p
-          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
-        >
+        </p>
+        <p className="text-4xl sm:text-6xl font-black text-[#f5f5f5] leading-tight">
           We validate ideas.
-        </motion.p>
-        <motion.p
-          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
-        >
+        </p>
+        <p className="text-4xl sm:text-6xl font-black text-[#f5f5f5] leading-tight">
           We listen to feedback.
-        </motion.p>
+        </p>
       </motion.div>
 
       {/* Hint text */}
-      {isCurrentlyInView && phase === 0 && (
+      {isCurrentlyInView && phase < 3 && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.4 }}
+          transition={{ delay: phase === 0 ? 1.2 : 0.3, duration: 0.4 }}
           className="text-stone-500 text-xs"
         >
           Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
+          {phase > 0 && <span className="ml-2 text-stone-600">({phase}/3)</span>}
         </motion.p>
       )}
 
       {/* Phase 1: The twist */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={phase >= 1 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={phase >= 1 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
         className="flex flex-col items-center"
       >
@@ -92,22 +83,22 @@ export default function Section01Hook() {
           And still build things
         </p>
         <p className="text-4xl sm:text-6xl font-black text-[#E8699A]">
-          nobody wants.
+          nobody wants to buy. 😢
         </p>
       </motion.div>
 
-      {/* Phase 2: The question */}
+      {/* Phase 2: The insight */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={phase >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
-        className="mt-4 bg-[#E8699A]/10 border border-[#E8699A]/30 rounded-xl px-6 py-4"
+        className="bg-[#E8699A]/10 border border-[#E8699A]/30 rounded-xl px-6 py-4"
       >
         <p className="text-lg sm:text-xl text-[#f5f5f5] font-semibold">
-          What if the problem isn't <span className="italic text-stone-400">how</span> we listen—
+          It's not their job to tell us the truth.
         </p>
         <p className="text-lg sm:text-xl text-[#f5f5f5] font-semibold">
-          but <span className="text-[#E8699A] font-black">what</span> we're hearing?
+          It's our job to <span className="text-[#E8699A] font-black">ask the right questions</span>.
         </p>
       </motion.div>
 
@@ -116,7 +107,7 @@ export default function Section01Hook() {
         initial={{ opacity: 0, y: 20 }}
         animate={phase >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
-        className="mt-6 flex flex-col items-center gap-3"
+        className="flex flex-col items-center gap-3"
       >
         <p className="text-stone-500 text-xs uppercase tracking-widest">
           Your mission

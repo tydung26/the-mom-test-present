@@ -73,15 +73,16 @@ export default function Section10Slicing() {
         </p>
       </motion.div>
 
-      {/* Hint text */}
-      {isCurrentlyInView && tier === 0 && (
+      {/* Hint text - show until all tiers revealed */}
+      {isCurrentlyInView && tier < MAX_TIER && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
+          transition={{ delay: tier === 0 ? 0.5 : 0.2, duration: 0.4 }}
           className="text-center text-stone-500 text-xs"
         >
-          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd> to slice
+          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
+          {tier > 0 && <span className="ml-2 text-stone-600">({tier}/{MAX_TIER})</span>}
         </motion.p>
       )}
 

@@ -201,15 +201,16 @@ export default function Section11Meetings() {
         ))}
       </div>
 
-      {/* Hint text - shows until first flip */}
-      {isCurrentlyInView && flippedCount === 0 && (
+      {/* Hint text - show until all cards flipped */}
+      {isCurrentlyInView && flippedCount < CARDS.length && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.4 }}
+          transition={{ delay: flippedCount === 0 ? 0.8 : 0.2, duration: 0.4 }}
           className="mt-4 text-center text-stone-500 text-xs"
         >
-          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd> to reveal
+          Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
+          {flippedCount > 0 && <span className="ml-2 text-stone-600">({flippedCount}/{CARDS.length})</span>}
         </motion.p>
       )}
 
