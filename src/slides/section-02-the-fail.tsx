@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { staggerContainer, fadeIn, earlyViewport, defaultViewport } from '../lib/animation-variants'
+import { chatStaggerContainer, fadeIn, earlyViewport, defaultViewport } from '../lib/animation-variants'
 import ChatBubble from '../components/chat-bubble'
 
 interface Message {
@@ -54,7 +54,7 @@ export default function Section02TheFail() {
       </motion.h2>
 
       <motion.div
-        variants={staggerContainer}
+        variants={chatStaggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={earlyViewport}
@@ -77,7 +77,7 @@ export default function Section02TheFail() {
         initial="hidden"
         whileInView="visible"
         viewport={defaultViewport}
-        transition={{ delay: 1.5, duration: 0.5 }}
+        transition={{ delay: 0.5, duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
         className="mt-6 flex justify-center"
       >
         <span className="bg-red-500/20 text-red-400 rounded-full px-4 py-1 text-sm font-bold tracking-widest uppercase">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { staggerItem } from '../lib/animation-variants'
+import { chatBubbleItem, chatBubbleItemRight } from '../lib/animation-variants'
 
 interface ChatBubbleProps {
   sender: string
@@ -7,7 +7,6 @@ interface ChatBubbleProps {
   subtext?: string
   side: 'left' | 'right'
   color: 'amber' | 'stone' | 'green'
-  delay?: number
 }
 
 const colorMap = {
@@ -28,12 +27,10 @@ export default function ChatBubble({
   subtext,
   side,
   color,
-  delay = 0,
 }: ChatBubbleProps) {
   return (
     <motion.div
-      variants={staggerItem}
-      transition={{ delay }}
+      variants={side === 'right' ? chatBubbleItemRight : chatBubbleItem}
       className={`flex w-full ${side === 'right' ? 'justify-end' : 'justify-start'}`}
     >
       <div

@@ -35,6 +35,34 @@ export const staggerFastContainer: Variants = {
   },
 }
 
+// Chat-optimized: snappy reveal with ease-out-quint
+export const chatStaggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+}
+
+export const chatBubbleItem: Variants = {
+  hidden: { opacity: 0, x: -20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+  },
+}
+
+export const chatBubbleItemRight: Variants = {
+  hidden: { opacity: 0, x: 20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+  },
+}
+
 export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
