@@ -1,58 +1,51 @@
 import { motion } from 'framer-motion'
 import { defaultViewport } from '../lib/animation-variants'
 
-// Ease-out-quint for smooth reveals
 const EASE_OUT_QUINT = [0.23, 1, 0.32, 1] as const
 
 export default function Section00Agenda() {
   return (
-    <div className="max-w-2xl w-full flex flex-col items-center gap-10">
-      {/* Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
+    <div className="w-full max-w-3xl flex flex-col items-center gap-20">
+      {/* Message 1 */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={defaultViewport}
-        transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
-        className="text-2xl sm:text-3xl font-bold text-stone-400 text-center"
+        transition={{ duration: 0.7, ease: EASE_OUT_QUINT }}
+        className="text-center"
       >
-        Two things to remember
-      </motion.h2>
-
-      {/* Core Message 1 */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={defaultViewport}
-        transition={{ duration: 0.6, ease: EASE_OUT_QUINT, delay: 0.2 }}
-        className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-center"
-      >
-        <span className="text-[#E8699A] text-sm font-black uppercase tracking-widest">
-          Message 1
-        </span>
-        <p className="mt-3 text-3xl sm:text-4xl font-black text-[#f5f5f5] leading-tight">
-          Truth is uncomfortable
+        <p className="text-4xl sm:text-5xl md:text-6xl font-black text-[#f5f5f5] leading-tight tracking-tight">
+          Truth is{' '}
+          <span className="text-[#E8699A]">uncomfortable</span>
         </p>
-        <p className="mt-2 text-stone-500 text-sm">
-          If the conversation felt good, the data is probably fake.
+        <p className="mt-4 text-stone-500 text-base sm:text-lg">
+          If it felt good, the data is fake.
         </p>
       </motion.div>
 
-      {/* Core Message 2 */}
+      {/* Divider */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
         viewport={defaultViewport}
-        transition={{ duration: 0.6, ease: EASE_OUT_QUINT, delay: 0.4 }}
-        className="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-center"
+        transition={{ duration: 0.4, ease: EASE_OUT_QUINT, delay: 0.2 }}
+        className="w-2 h-2 rounded-full bg-[#E8699A]/60"
+      />
+
+      {/* Message 2 */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={defaultViewport}
+        transition={{ duration: 0.7, ease: EASE_OUT_QUINT, delay: 0.3 }}
+        className="text-center"
       >
-        <span className="text-[#E8699A] text-sm font-black uppercase tracking-widest">
-          Message 2
-        </span>
-        <p className="mt-3 text-3xl sm:text-4xl font-black text-[#f5f5f5] leading-tight">
-          Seek commitment
+        <p className="text-4xl sm:text-5xl md:text-6xl font-black text-[#f5f5f5] leading-tight tracking-tight">
+          Seek{' '}
+          <span className="text-[#E8699A]">commitment</span>
         </p>
-        <p className="mt-2 text-stone-500 text-sm">
-          Compliments cost nothing — they're worth nothing.
+        <p className="mt-4 text-stone-500 text-base sm:text-lg">
+          Compliments cost nothing = worth nothing.
         </p>
       </motion.div>
     </div>

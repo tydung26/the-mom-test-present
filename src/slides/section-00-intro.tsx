@@ -24,9 +24,11 @@ export default function Section00Intro() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={defaultViewport}
         transition={{ duration: 0.6, ease: EASE_OUT_QUINT, delay: 0.3 }}
-        className="text-xl sm:text-2xl text-stone-400 font-medium max-w-xl leading-relaxed"
+        className="text-lg sm:text-xl text-stone-400 font-medium max-w-2xl leading-relaxed"
       >
-        How to talk to customers & learn if your business is a good idea when everyone is lying to you
+        How to talk to customers & learn if your business is a good idea
+        <br />
+        <span className="text-stone-500">when everyone is too nice to tell you the truth</span>
       </motion.p>
 
       {/* Author */}

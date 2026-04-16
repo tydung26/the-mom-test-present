@@ -52,17 +52,22 @@ export default function Section05TheFix() {
         ))}
       </motion.div>
 
-      {/* Tagline */}
-      <motion.p
+      {/* Punchline */}
+      <motion.div
         variants={fadeIn}
         initial="hidden"
         whileInView="visible"
         viewport={defaultViewport}
         transition={{ delay: 0.6, duration: 0.5 }}
-        className="mt-10 text-center text-sm text-stone-400 italic max-w-xl mx-auto"
+        className="mt-12 text-center"
       >
-        "If you avoid mentioning your idea, you automatically ask better questions."
-      </motion.p>
+        <p className="text-2xl sm:text-3xl font-black text-[#f5f5f5] leading-snug">
+          They own the <span className="text-[#E8699A]">problem</span>.
+        </p>
+        <p className="text-2xl sm:text-3xl font-black text-[#f5f5f5] leading-snug">
+          You own the <span className="text-[#E8699A]">solution</span>.
+        </p>
+      </motion.div>
     </div>
   )
 }

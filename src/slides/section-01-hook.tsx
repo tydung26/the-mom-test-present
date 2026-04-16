@@ -12,11 +12,12 @@ export default function Section01Hook() {
   const [phase, setPhase] = useState(0)
   // phase 0 = initial state
   // phase 1 = reveal the twist
-  // phase 2 = show the punchline
+  // phase 2 = show the question
+  // phase 3 = show the mission
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && isCurrentlyInView && phase < 2) {
+      if (e.key === 'Enter' && isCurrentlyInView && phase < 3) {
         e.preventDefault()
         setPhase((p) => p + 1)
       }
@@ -95,7 +96,7 @@ export default function Section01Hook() {
         </p>
       </motion.div>
 
-      {/* Phase 2: The punchline */}
+      {/* Phase 2: The question */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={phase >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
@@ -107,6 +108,21 @@ export default function Section01Hook() {
         </p>
         <p className="text-lg sm:text-xl text-[#f5f5f5] font-semibold">
           but <span className="text-[#E8699A] font-black">what</span> we're hearing?
+        </p>
+      </motion.div>
+
+      {/* Phase 3: The mission */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={phase >= 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
+        className="mt-6 flex flex-col items-center gap-3"
+      >
+        <p className="text-stone-500 text-xs uppercase tracking-widest">
+          Your mission
+        </p>
+        <p className="text-2xl sm:text-3xl font-black text-[#f5f5f5] text-center leading-snug">
+          Learn the <span className="text-[#E8699A]">truth</span> before you run out of money.
         </p>
       </motion.div>
     </div>
