@@ -3,29 +3,25 @@ import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 // Ease-out-quint for smooth reveals
-const EASE_OUT_QUINT = [0.23, 1, 0.32, 1]
-
-const PROBLEM_TEXT = 'We talk to customers… and still end up building stuff nobody buys.'
-const HIGHLIGHT = 'nobody buys'
+const EASE_OUT_QUINT = [0.23, 1, 0.32, 1] as const
 
 export default function Section01Hook() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const isInViewOnce = useInView(ref, { once: true, amount: 0.3 })
+  const isCurrentlyInView = useInView(ref, { amount: 0.5 })
   const [phase, setPhase] = useState(0)
-  // phase 0 = show "Why?"
-  // phase 1 = show problem statement (typewriter)
+  // phase 0 = initial state
+  // phase 1 = reveal the twist
+  // phase 2 = show the punchline
 
-  const [displayed, setDisplayed] = useState('')
-
-  // Handle Enter key to advance phase
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && isInView && phase < 1) {
+      if (e.key === 'Enter' && isCurrentlyInView && phase < 2) {
         e.preventDefault()
-        setPhase(1)
+        setPhase((p) => p + 1)
       }
     },
-    [isInView, phase]
+    [isCurrentlyInView, phase]
   )
 
   useEffect(() => {
@@ -33,81 +29,85 @@ export default function Section01Hook() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  // Typewriter effect for problem statement
-  useEffect(() => {
-    if (phase < 1) return
-    let i = 0
-    const timer = setInterval(() => {
-      i++
-      setDisplayed(PROBLEM_TEXT.slice(0, i))
-      if (i >= PROBLEM_TEXT.length) clearInterval(timer)
-    }, 35)
-    return () => clearInterval(timer)
-  }, [phase])
-
-  // Split displayed text around the highlight phrase
-  const highlightStart = PROBLEM_TEXT.indexOf(HIGHLIGHT)
-  const before = displayed.slice(0, highlightStart)
-  const highlight = displayed.slice(highlightStart, Math.min(displayed.length, highlightStart + HIGHLIGHT.length))
-  const after = displayed.slice(highlightStart + HIGHLIGHT.length)
-
   return (
-    <div ref={ref} className="max-w-4xl text-center flex flex-col items-center gap-8">
-      {/* Phase 0: The "Why?" question */}
+    <div ref={ref} className="max-w-4xl text-center flex flex-col items-center gap-6">
+      {/* Phase 0: The setup - what we all do */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInViewOnce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.7, ease: EASE_OUT_QUINT }}
-        className="flex flex-col items-center"
+        className="flex flex-col items-center gap-2"
       >
         <motion.p
-          initial={{ opacity: 1 }}
-          animate={{ opacity: phase >= 1 ? 0.4 : 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl sm:text-7xl font-black text-[#f5f5f5] tracking-tight"
+          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-xl sm:text-2xl text-stone-400 font-medium"
         >
-          Why do we build things
+          We do everything right.
         </motion.p>
         <motion.p
-          initial={{ opacity: 1 }}
-          animate={{ opacity: phase >= 1 ? 0.4 : 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-5xl sm:text-7xl font-black text-[#E8699A] tracking-tight"
+          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
         >
-          nobody wants?
+          We talk to customers.
+        </motion.p>
+        <motion.p
+          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
+        >
+          We validate ideas.
+        </motion.p>
+        <motion.p
+          animate={{ opacity: phase >= 1 ? 0.3 : 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-3xl sm:text-5xl font-bold text-[#f5f5f5]"
+        >
+          We listen to feedback.
         </motion.p>
       </motion.div>
 
       {/* Hint text */}
-      {isInView && phase === 0 && (
+      {isCurrentlyInView && phase === 0 && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.4 }}
+          transition={{ delay: 1.2, duration: 0.4 }}
           className="text-stone-500 text-xs"
         >
           Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
         </motion.p>
       )}
 
-      {/* Phase 1: The problem statement (answer) */}
+      {/* Phase 1: The twist */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={phase >= 1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={phase >= 1 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
-        className="min-h-[6rem]"
+        className="flex flex-col items-center"
       >
-        {phase >= 1 && (
-          <p className="text-2xl sm:text-3xl font-semibold text-[#f5f5f5]/90 leading-relaxed tracking-tight">
-            <span className="italic text-stone-400">&ldquo;</span>
-            {before}
-            {highlight && (
-              <span className="text-[#E8699A] font-black">{highlight}</span>
-            )}
-            {after}
-            <span className="italic text-stone-400">&rdquo;</span>
-          </p>
-        )}
+        <p className="text-4xl sm:text-6xl font-black text-[#f5f5f5]">
+          And still build things
+        </p>
+        <p className="text-4xl sm:text-6xl font-black text-[#E8699A]">
+          nobody wants.
+        </p>
+      </motion.div>
+
+      {/* Phase 2: The punchline */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={phase >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
+        className="mt-4 bg-[#E8699A]/10 border border-[#E8699A]/30 rounded-xl px-6 py-4"
+      >
+        <p className="text-lg sm:text-xl text-[#f5f5f5] font-semibold">
+          What if the problem isn't <span className="italic text-stone-400">how</span> we listen—
+        </p>
+        <p className="text-lg sm:text-xl text-[#f5f5f5] font-semibold">
+          but <span className="text-[#E8699A] font-black">what</span> we're hearing?
+        </p>
       </motion.div>
     </div>
   )
