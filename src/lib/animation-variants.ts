@@ -1,19 +1,8 @@
-import type { Variants, Transition } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 
-// Direction-aware slide transition for deck navigation
-export function getSlideVariants(direction: number): Variants {
-  return {
-    enter: { x: direction > 0 ? '100%' : '-100%', opacity: 0 },
-    center: { x: 0, opacity: 1 },
-    exit: { x: direction > 0 ? '-100%' : '100%', opacity: 0 },
-  }
-}
-
-export const slideTransition: Transition = {
-  type: 'tween',
-  duration: 0.35,
-  ease: [0.25, 0.46, 0.45, 0.94],
-}
+// Shared viewport config for scroll-triggered animations
+export const defaultViewport = { once: true, amount: 0.3 }
+export const earlyViewport = { once: true, amount: 0.15 }
 
 // Fade variants
 export const fadeIn: Variants = {
