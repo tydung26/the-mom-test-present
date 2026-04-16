@@ -122,18 +122,19 @@ function FlipCard({
 
 export default function Section11Meetings() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  // Live tracking for Enter key (animations use whileInView directly)
+  const isCurrentlyInView = useInView(ref, { amount: 0.5 })
   const [flippedCount, setFlippedCount] = useState(0)
 
-  // Handle Enter key to flip next card
+  // Handle Enter key to flip next card (only when currently visible)
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && isInView && flippedCount < CARDS.length) {
+      if (e.key === 'Enter' && isCurrentlyInView && flippedCount < CARDS.length) {
         e.preventDefault()
         setFlippedCount((prev) => prev + 1)
       }
     },
-    [isInView, flippedCount]
+    [isCurrentlyInView, flippedCount]
   )
 
   useEffect(() => {
@@ -195,13 +196,13 @@ export default function Section11Meetings() {
             card={card}
             index={i}
             isFlipped={i < flippedCount}
-            isNext={i === flippedCount && isInView}
+            isNext={i === flippedCount && isCurrentlyInView}
           />
         ))}
       </div>
 
       {/* Hint text - shows until first flip */}
-      {isInView && flippedCount === 0 && (
+      {isCurrentlyInView && flippedCount === 0 && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

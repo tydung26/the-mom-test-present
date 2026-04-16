@@ -18,7 +18,7 @@ const STATEMENTS = [
 ]
 
 // Ease-out-quint for impactful entrances
-const EASE_OUT_QUINT = [0.23, 1, 0.32, 1]
+const EASE_OUT_QUINT = [0.23, 1, 0.32, 1] as const
 
 export default function Section03MessageOne() {
   return (

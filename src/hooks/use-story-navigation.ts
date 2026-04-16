@@ -3,29 +3,13 @@ import { sections } from '../lib/sections-data.ts'
 
 const TOTAL_SECTIONS = sections.length
 
-/** Parse #section-N from URL hash, return 0-based index */
-function getInitialSection(): number {
-  if (typeof window === 'undefined') return 0
-  const hash = window.location.hash.replace('#', '')
-
-  // Support both #section-5 (new) and #5 (legacy)
-  const sectionMatch = hash.match(/^section-(\d+)$/)
-  if (sectionMatch) {
-    const num = parseInt(sectionMatch[1], 10)
-    if (num >= 1 && num <= TOTAL_SECTIONS) return num - 1
-  }
-  const num = parseInt(hash, 10)
-  if (!isNaN(num) && num >= 1 && num <= TOTAL_SECTIONS) return num - 1
-
-  return 0
-}
-
 export function useStoryNavigation() {
   const sectionRefs = useRef<(HTMLElement | null)[]>(
     Array.from({ length: TOTAL_SECTIONS }, () => null),
   )
-  const [currentSection, setCurrentSection] = useState(getInitialSection)
+  const [currentSection, setCurrentSection] = useState(0)
   const isScrollingRef = useRef(false)
+  const isInitializedRef = useRef(false)
 
   // Assign ref callback for scroll-container to wire up
   const setSectionRef = useCallback(
@@ -50,42 +34,63 @@ export function useStoryNavigation() {
     }, 800)
   }, [])
 
-  // IntersectionObserver: track which section is most visible
+  // Force scroll to top on mount and delay observer setup
   useEffect(() => {
-    const observers: IntersectionObserver[] = []
+    // Force scroll to top immediately
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
-    sectionRefs.current.forEach((el, index) => {
-      if (!el) return
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !isScrollingRef.current) {
+    // Delay observer setup to avoid initial intersection cascade
+    const initTimeout = setTimeout(() => {
+      isInitializedRef.current = true
+    }, 300)
+
+    return () => clearTimeout(initTimeout)
+  }, [])
+
+  // IntersectionObserver: track which section is most visible
+  // Uses a single observer with all entries to pick the most visible one
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Ignore events before initialization or during programmatic scroll
+        if (!isInitializedRef.current || isScrollingRef.current) return
+
+        // Find the entry with highest intersection ratio
+        let bestEntry: IntersectionObserverEntry | null = null
+        let bestRatio = 0
+
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio
+            bestEntry = entry
+          }
+        }
+
+        if (bestEntry) {
+          const index = sectionRefs.current.findIndex(
+            (el) => el === bestEntry!.target
+          )
+          if (index !== -1) {
             setCurrentSection(index)
           }
-        },
-        { threshold: 0.5 },
-      )
-      observer.observe(el)
-      observers.push(observer)
+        }
+      },
+      { threshold: [0.3, 0.5, 0.7] },
+    )
+
+    // Observe all sections
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el)
     })
 
-    return () => observers.forEach((obs) => obs.disconnect())
+    return () => observer.disconnect()
   }, [])
 
-  // Scroll to initial section on mount (if hash present)
+  // Update URL hash on section change (use section.id to match element IDs)
   useEffect(() => {
-    const initial = getInitialSection()
-    if (initial > 0) {
-      // Small delay to ensure refs are wired up
-      requestAnimationFrame(() => {
-        const el = sectionRefs.current[initial]
-        if (el) el.scrollIntoView({ behavior: 'instant' })
-      })
-    }
-  }, [])
-
-  // Update URL hash on section change
-  useEffect(() => {
-    const newHash = `#section-${currentSection + 1}`
+    if (!isInitializedRef.current) return
+    const sectionId = sections[currentSection]?.id ?? currentSection
+    const newHash = `#section-${sectionId}`
     if (window.location.hash !== newHash) {
       history.replaceState(null, '', newHash)
     }

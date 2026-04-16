@@ -17,7 +17,7 @@ const SLICING_QUESTIONS = [
 ]
 
 // Ease-out-quint for smooth reveals
-const EASE_OUT_QUINT = [0.23, 1, 0.32, 1]
+const EASE_OUT_QUINT = [0.23, 1, 0.32, 1] as const
 
 // Total steps: 8
 // 0 = nothing, 1 = tier1, 2 = questions, 3 = blur+arrow, 4 = tier2,
@@ -26,18 +26,19 @@ const MAX_TIER = 8
 
 export default function Section10Slicing() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  // Live tracking for Enter key (animations use whileInView directly)
+  const isCurrentlyInView = useInView(ref, { amount: 0.5 })
   const [tier, setTier] = useState(0)
 
-  // Handle Enter key to advance tier
+  // Handle Enter key to advance tier (only when currently visible)
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && isInView && tier < MAX_TIER) {
+      if (e.key === 'Enter' && isCurrentlyInView && tier < MAX_TIER) {
         e.preventDefault()
         setTier((prev) => prev + 1)
       }
     },
-    [isInView, tier]
+    [isCurrentlyInView, tier]
   )
 
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function Section10Slicing() {
       </motion.div>
 
       {/* Hint text */}
-      {isInView && tier === 0 && (
+      {isCurrentlyInView && tier === 0 && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

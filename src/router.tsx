@@ -4,7 +4,7 @@ import { routeTree } from './routeTree.gen'
 export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
-    scrollRestoration: true,
+    scrollRestoration: false, // Disabled to prevent scroll cascade with IntersectionObserver
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
   })
