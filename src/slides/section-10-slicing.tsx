@@ -2,11 +2,11 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { fadeIn, defaultViewport } from '../lib/animation-variants'
 
-// Sequential funnel: broad → narrow → who-where pair
+// Sequential funnel: broad → narrow → who-where pair (ties to photo book app story)
 const FUNNEL_TIERS = [
-  { label: 'Traders', width: 'max-w-3xl' },
-  { label: 'Stock traders', width: 'max-w-2xl' },
-  { label: 'Part-time traders who lost money this year wanting to learn', width: 'max-w-xl' },
+  { label: 'People who take photos', width: 'max-w-3xl' },
+  { label: 'Parents with young kids', width: 'max-w-2xl' },
+  { label: 'First-time parents with 10,000+ phone photos who haven\'t printed since the hospital', width: 'max-w-xl' },
 ]
 
 // Slicing questions from the book
@@ -69,7 +69,7 @@ export default function Section10Slicing() {
         className="w-full rounded-lg bg-red-500/8 border border-red-500/20 px-5 py-3 text-center mb-1"
       >
         <p className="text-red-400 text-sm font-semibold">
-          <span className="font-black">"Traders"</span> = too broad — drowning in mixed signals
+          <span className="font-black">"People who take photos"</span> = too broad — drowning in mixed signals
         </p>
       </motion.div>
 
@@ -78,7 +78,7 @@ export default function Section10Slicing() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: tier === 0 ? 0.5 : 0.2, duration: 0.4 }}
+          transition={{ delay: tier === 0 ? 0.4 : 0.15, duration: 0.25 }}
           className="text-center text-stone-500 text-xs"
         >
           Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
@@ -197,7 +197,7 @@ export default function Section10Slicing() {
         <span className="text-[#78716c] text-sm">+</span>
         <span className="text-[#E8699A] font-black text-base tracking-wide">WHERE</span>
         <span className="text-[#78716c] text-sm mx-1">=</span>
-        <span className="text-[#f5f5f5] text-sm font-semibold">Find via trading Discord servers, stock groups</span>
+        <span className="text-[#f5f5f5] text-sm font-semibold">Parent groups, baby apps, hospital partnerships</span>
       </motion.div>
 
       {/* Method box — the slicing questions summary */}
