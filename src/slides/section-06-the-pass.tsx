@@ -10,44 +10,44 @@ interface Message {
   annotation?: string
 }
 
-// Cookbook/iPad pass conversation — asking about real behavior, not hypotheticals
+// Photo book app pass conversation — asking about real behavior, not hypotheticals
 const messages: Message[] = [
   {
     sender: 'Son',
-    message: "What's the last thing you cooked from a recipe?",
+    message: "When's the last time you printed a photo?",
     side: 'right',
     color: 'green',
-    annotation: 'Specific past behavior',
+    annotation: 'Specific past action',
   },
   {
     sender: 'Mom',
-    message: 'Oh, I made that lamb stew last week from a card your aunt gave me.',
+    message: "Oh... maybe three years ago? For your aunt's birthday.",
     side: 'left',
     color: 'stone',
   },
   {
     sender: 'Son',
-    message: 'Where did you find out about the apps you use on your iPad?',
+    message: 'Where are your favorite photos right now?',
     side: 'right',
     color: 'green',
-    annotation: 'Discovery habits',
+    annotation: 'Current behavior',
   },
   {
     sender: 'Mom',
-    message: "I don't really look for apps. Your father set most of them up.",
+    message: "On my phone somewhere. I scroll past them sometimes.",
     side: 'left',
     color: 'stone',
   },
   {
     sender: 'Son',
-    message: "What's the last cookbook you bought for yourself?",
+    message: "Have you ever made a photo book before?",
     side: 'right',
     color: 'green',
-    annotation: 'Real purchase history',
+    annotation: 'Prior solutions',
   },
   {
     sender: 'Mom',
-    message: "I haven't bought one in years. I just use the ones I have, or ask friends.",
+    message: "I started one online once. Got overwhelmed choosing photos and gave up.",
     side: 'left',
     color: 'stone',
   },

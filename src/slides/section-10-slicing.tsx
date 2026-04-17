@@ -4,9 +4,9 @@ import { fadeIn, defaultViewport } from '../lib/animation-variants'
 
 // Sequential funnel: broad → narrow → who-where pair
 const FUNNEL_TIERS = [
-  { label: 'Students', width: 'max-w-3xl' },
-  { label: 'PhD students', width: 'max-w-2xl' },
-  { label: 'Non-native PhD students with upcoming talks', width: 'max-w-xl' },
+  { label: 'Traders', width: 'max-w-3xl' },
+  { label: 'Stock traders', width: 'max-w-2xl' },
+  { label: 'Part-time traders who lost money this year wanting to learn', width: 'max-w-xl' },
 ]
 
 // Slicing questions from the book
@@ -69,7 +69,7 @@ export default function Section10Slicing() {
         className="w-full rounded-lg bg-red-500/8 border border-red-500/20 px-5 py-3 text-center mb-1"
       >
         <p className="text-red-400 text-sm font-semibold">
-          <span className="font-black">"Students"</span> = too broad — drowning in mixed signals
+          <span className="font-black">"Traders"</span> = too broad — drowning in mixed signals
         </p>
       </motion.div>
 
@@ -197,7 +197,7 @@ export default function Section10Slicing() {
         <span className="text-[#78716c] text-sm">+</span>
         <span className="text-[#E8699A] font-black text-base tracking-wide">WHERE</span>
         <span className="text-[#78716c] text-sm mx-1">=</span>
-        <span className="text-[#f5f5f5] text-sm font-semibold">Find via department advisors</span>
+        <span className="text-[#f5f5f5] text-sm font-semibold">Find via trading Discord servers, stock groups</span>
       </motion.div>
 
       {/* Method box — the slicing questions summary */}

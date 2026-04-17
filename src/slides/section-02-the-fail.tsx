@@ -10,33 +10,33 @@ interface Message {
   subtext?: string
 }
 
-// Cookbook/iPad conversation from the book - shows how mom's answers are lies
+// Photo book app conversation - shows how mom's answers are lies
 const messages: Message[] = [
   {
     sender: 'Son',
-    message: 'Would you ever buy an app which was like a cookbook for your iPad?',
+    message: 'Would you pay for an app that prints photo books from your phone?',
     side: 'right',
     color: 'amber',
   },
   {
     sender: 'Mom',
-    message: 'Hmmm.',
+    message: 'Oh, that sounds lovely!',
     side: 'left',
     color: 'stone',
-    subtext: "(I haven't bought a cookbook in years...)",
+    subtext: "(I have 10,000 photos I've never looked at twice...)",
   },
   {
     sender: 'Son',
-    message: 'And it only costs $40...',
+    message: 'You could make albums for the grandkids...',
     side: 'right',
     color: 'amber',
   },
   {
     sender: 'Mom',
-    message: 'Oh, well yes honey, that sounds amazing.',
+    message: "Yes honey, I'd love that!",
     side: 'left',
     color: 'stone',
-    subtext: '(He worked so hard on this...)',
+    subtext: '(He seems so proud of this idea...)',
   },
 ]
 
