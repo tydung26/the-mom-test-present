@@ -58,7 +58,7 @@ export default function Section03MessageOne() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: phase === 0 ? 1.0 : 0.3, duration: 0.4 }}
+          transition={{ delay: phase === 0 ? 0.4 : 0.15, duration: 0.25 }}
           className="text-stone-500 text-xs"
         >
           Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>

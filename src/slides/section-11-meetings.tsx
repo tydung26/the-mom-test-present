@@ -206,7 +206,7 @@ export default function Section11Meetings() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: flippedCount === 0 ? 0.8 : 0.2, duration: 0.4 }}
+          transition={{ delay: flippedCount === 0 ? 0.4 : 0.15, duration: 0.25 }}
           className="mt-4 text-center text-stone-500 text-xs"
         >
           Press <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-stone-400 font-mono">Enter</kbd>
